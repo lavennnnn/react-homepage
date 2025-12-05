@@ -44,10 +44,9 @@ const App: React.FC = () => {
               </>
             } 
           />
+          {/* Markdown file routes - now using the same layout */}
+          <Route path="/post/:filename" element={<MarkdownPage />} />
         </Route>
-        
-        {/* Markdown file routes - these use a different layout */}
-        <Route path="/post/:filename" element={<MarkdownPage />} />
       </Routes>
     </Router>
   );

@@ -4,7 +4,6 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import rehypeSlug from 'rehype-slug';
-import Navbar from '../components/Navbar';
 import TableOfContents, { Heading } from '../components/TableOfContents';
 
 const MarkdownPage: React.FC = () => {
@@ -95,8 +94,7 @@ const MarkdownPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#1e1e1e] text-[#d4d4d4]">
-      {/* Use the same Navbar as homepage */}
-      <Navbar />
+      {/* Navbar is now provided by HomeLayout */}
       
       <div className="max-w-7xl mx-auto px-6 pt-32 pb-16">
         <div className="flex gap-8">
