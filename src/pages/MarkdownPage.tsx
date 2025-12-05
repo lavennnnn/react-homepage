@@ -26,24 +26,28 @@ const MarkdownPage: React.FC = () => {
     const formattedFilename = filename.endsWith('.md') ? filename : `${filename}.md`;
 
     const fetchMarkdown = async () => {
-      try {
-        console.log(`Fetching: /posts/${formattedFilename}`);
-        const response = await fetch(`/posts/${formattedFilename}`);
-        if (!response.ok) {
-          throw new Error('Failed to load markdown file');
+        try {
+          // 使用绝对路径确保在Vercel环境中能正确访问
+          const url = `/posts/${formattedFilename}`;
+          console.log(`Fetching: ${url}`);
+          
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to load markdown file: ${response.status} ${response.statusText}`);
+          }
+          const content = await response.text();
+          console.log('Markdown content loaded:', content.length, 'characters');
+          setMarkdownContent(content);
+        } catch (err) {
+          console.error('Error fetching markdown:', err);
+          // 提供更详细的错误信息
+          setError(err instanceof Error ? `${err.message} - 请检查文件路径是否正确` : 'An error occurred');
+        } finally {
+          setLoading(false);
         }
-        const content = await response.text();
-        console.log('Markdown content loaded:', content.length, 'characters');
-        setMarkdownContent(content);
-      } catch (err) {
-        console.error('Error fetching markdown:', err);
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
-    fetchMarkdown();
+      fetchMarkdown();
   }, [filename]);
 
   // 从 DOM 中提取标题（确保 ID 与 rehype-slug 一致）
