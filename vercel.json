@@ -1,4 +1,7 @@
 {
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ],
   "buildCommand": "chmod +x node_modules/.bin/vite && npm run build",
   "outputDirectory": "dist",
   "framework": "vite"
